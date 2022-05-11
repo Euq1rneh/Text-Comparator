@@ -10,7 +10,7 @@ public class RunComparator {
             	TextComparatorGUI gui = new TextComparatorGUI();                
             }
         });
-		
+
 	}
 
 }

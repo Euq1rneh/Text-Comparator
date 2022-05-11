@@ -197,10 +197,12 @@ public class TextComparatorGUI implements ActionListener{
      * @param errorLog the error log containing the indexes of the diferences
      */
     public void highlight(ArrayList<Integer> errorLog) {
+    	//TODO ISSUE if the orignal text is bigger than the comparison text its highlighting to the whole box
         try {
         	compareTextField.getHighlighter().removeAllHighlights();
         	if(errorLog.size() > 0) {
         		for(int i = 0; i < errorLog.size(); i++) {
+        			System.out.println(errorLog.get(i));
         			// add spaces equal to the number of missing letters
         			if(errorLog.get(i) > compareTextField.getText().length()) {
         				compareTextField.setText(compareTextField.getText()+ " ");
@@ -209,8 +211,10 @@ public class TextComparatorGUI implements ActionListener{
             		compareTextField.getHighlighter().addHighlight(errorLog.get(i), errorLog.get(i)+1, new DefaultHighlighter.DefaultHighlightPainter(new Color(255, 103, 92)));
         		}
         	// if there are no mistakes text will be higlighted in green
-        	}else {
+        	}else if(errorLog.size() == 0 && originalTextField.getText().length() != 0){
         		compareTextField.getHighlighter().addHighlight(0, compareTextField.getText().length(), new DefaultHighlighter.DefaultHighlightPainter(Color.GREEN));
+        	}else {
+        		// do nothing
         	}
         } catch (BadLocationException e) {
         }
@@ -237,7 +241,7 @@ public class TextComparatorGUI implements ActionListener{
 			newSubmissionBtn.setEnabled(true);
 			
 		}else if(e.getSource() == newSubmissionBtn) {
-			
+			comparator = new TextComparator(null, null);
 			originalTextField.setText("");
 			compareTextField.setText("");
 			

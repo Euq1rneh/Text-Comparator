@@ -6,8 +6,8 @@ import java.util.ArrayList;
  */
 public class TextComparator {
 	
-	private String[] originalText;
-	private String[] comparisonText;
+	private String originalText;
+	private String comparisonText;
 	private ArrayList<Integer> errorLog;
 	
 	/**
@@ -18,20 +18,20 @@ public class TextComparator {
 	 * 					(originalText == null && comparisonText == null)}
 	 */
 	public TextComparator(String originalText, String comparisonText){
-		if(originalText == null && comparisonText == null)
-			return;
-		
-		if(originalText == null) {
-			this.comparisonText = comparisonText.split("");		
-		}
-		else if(comparisonText == null) {
-			this.originalText = originalText.split("");			
-		}
-		else {
-			this.comparisonText = comparisonText.split("");
-			this.originalText = originalText.split("");		
-		}
 		errorLog = new ArrayList<>();
+		if(originalText == null && comparisonText == null) {
+			// do nothing
+		}
+		else if(originalText != null && comparisonText == null) {
+			this.originalText = originalText;
+		}
+		else if(comparisonText != null && originalText == null) {
+			this.comparisonText = comparisonText;
+		}else {
+			this.originalText = originalText;
+			this.comparisonText = comparisonText;
+		}
+
 	}
 	
 	/**
@@ -42,57 +42,62 @@ public class TextComparator {
 	public ArrayList<Integer> checkText() {
 		if(originalText == null && comparisonText == null) {
 			return errorLog;
-		}
-		
-		if(originalText.length > comparisonText.length) {
+		}else if(originalText != null && comparisonText == null) {
 			return largerOriginalText();
-		}else if(comparisonText.length > originalText.length){
+		}else if(originalText == null && comparisonText != null) {
 			return largerComparisonText();
+		}else {
+			if(originalText.length() > comparisonText.length()) {
+				return largerOriginalText();
+			}else if(comparisonText.length() > originalText.length()){
+				return largerComparisonText();
+			}
+			
+			return sameSizeTexts();
 		}
-		
-		return sameSizeTexts();
 	}
 	
 	private ArrayList<Integer> largerComparisonText(){   
+		System.out.println("larger comp");
 		// adds no equal letters
-		for(int i = 0; i < originalText.length; i++) {
+		for(int i = 0; i < originalText.length(); i++) {
 			// if two letters dont match on a certain index adds the index to a error log
-			if(!originalText[i].equals(comparisonText[i])) {
+			if(originalText.charAt(i) != comparisonText.charAt(i)) {
 				errorLog.add(i);
 			}
 		}
 		// adds all the extra indexes
-		for(int i = originalText.length; i < comparisonText.length; i++) {
+		for(int i = originalText.length(); i < comparisonText.length(); i++) {
 			errorLog.add(i);
 		}
 		return errorLog;
 	}
 	
-	private ArrayList<Integer> largerOriginalText(){   
+	private ArrayList<Integer> largerOriginalText(){ 
+		System.out.println("larger orig");
 		// adds no equal letters
-		for(int i = 0; i < comparisonText.length; i++) {
+		for(int i = 0; i < comparisonText.length(); i++) {
 			// if two letters dont match on a certain index adds the index to a error log
-			if(!originalText[i].equals(comparisonText[i])) {
+			if(originalText.charAt(i) != comparisonText.charAt(i)) {
 				errorLog.add(i);
 			}
 		}
 		// adds all the missing indexes
-		for(int i = comparisonText.length; i < originalText.length; i++) {
+		for(int i = comparisonText.length(); i < originalText.length(); i++) {
 			errorLog.add(i);
 		}
 		return errorLog;
 	}
 	
 	private ArrayList<Integer> sameSizeTexts(){
-		//TODO ADD CASE FOR originalText.LENGH < COMPARISONTEXT.LENGTH || COMPARISONTEXT.LENGTH < originalText.LENGH  
-				for(int i = 0; i < originalText.length; i++) {
-					// if two letters dont match on a certain index adds the index to a error log
-					if(!originalText[i].equals(comparisonText[i])) {
-						
-						errorLog.add(i);
-					}
-				}
-				return errorLog;
+		System.out.println("same");
+		for(int i = 0; i < originalText.length(); i++) {
+			// if two letters dont match on a certain index adds the index to a error log
+			if(originalText.charAt(i) != comparisonText.charAt(i)) {
+				errorLog.add(i);
+			}
+		}
+		return errorLog;
 	}
 
 }
