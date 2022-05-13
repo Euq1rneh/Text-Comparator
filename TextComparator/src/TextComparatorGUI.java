@@ -9,7 +9,9 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.TextAttribute;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -202,8 +204,17 @@ public class TextComparatorGUI implements ActionListener{
         	compareTextField.getHighlighter().removeAllHighlights();
         	if(errorLog.size() > 0) {
         		for(int i = 0; i < errorLog.size(); i++) {
-        			System.out.println(errorLog.get(i));
-        			// add spaces equal to the number of missing letters
+        			// if the comparison text is smaller than the orginal text add spaces at the position of the missing letters
+//        			if(compareTextField.getText().length() < originalTextField.getText().length()) {        				
+//        				String firstHalf = compareTextField.getText().substring(0, errorLog.get(i));
+//        				String secondHalf = compareTextField.getText().substring(errorLog.get(i));
+//        				
+//        				//was going to be used if striketrough was a possibility
+//        				//String missingLetter = originalTextField.getText().charAt(errorLog.get(i))+"";
+//        				
+//        				compareTextField.setText(firstHalf+" "+secondHalf);
+//        			}
+        			// add spaces equal to the number of missing letters at the end
         			if(errorLog.get(i) > compareTextField.getText().length()) {
         				compareTextField.setText(compareTextField.getText()+ " ");
         			}

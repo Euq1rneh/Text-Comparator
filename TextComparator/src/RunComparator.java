@@ -2,15 +2,20 @@
 public class RunComparator {
 
 	public static void main(String[] args) {
-		
-		//Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-            	TextComparatorGUI gui = new TextComparatorGUI();                
-            }
-        });
 
+
+		new TextComparatorGUI();                
+
+
+//		TextComparator comp = new TextComparator("ola o meu nome\r\n"
+//				+ "enquanto proirity\r\n"
+//				+ "ver se e compativel", 
+//				"ola o meu\r\n"
+//						+ "enquanto proirity\r\n"
+//						+ "ver se e compativel");
+//
+//		comp.checkText();
+//
 	}
 
 }

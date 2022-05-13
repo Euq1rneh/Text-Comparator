@@ -58,12 +58,13 @@ public class TextComparator {
 	}
 	
 	private ArrayList<Integer> largerComparisonText(){   
-		System.out.println("larger comp");
 		// adds no equal letters
+		int errorOfset = 0;
 		for(int i = 0; i < originalText.length(); i++) {
 			// if two letters dont match on a certain index adds the index to a error log
-			if(originalText.charAt(i) != comparisonText.charAt(i)) {
+			if(originalText.charAt(i-errorOfset) != comparisonText.charAt(i)) {
 				errorLog.add(i);
+				errorOfset++;
 			}
 		}
 		// adds all the extra indexes
@@ -74,23 +75,23 @@ public class TextComparator {
 	}
 	
 	private ArrayList<Integer> largerOriginalText(){ 
-		System.out.println("larger orig");
+		int errorOfset = 0;
 		// adds no equal letters
 		for(int i = 0; i < comparisonText.length(); i++) {
 			// if two letters dont match on a certain index adds the index to a error log
-			if(originalText.charAt(i) != comparisonText.charAt(i)) {
+			if(originalText.charAt(i) != comparisonText.charAt(i-errorOfset)) {
 				errorLog.add(i);
+				errorOfset++;
 			}
 		}
-		// adds all the missing indexes
-		for(int i = comparisonText.length(); i < originalText.length(); i++) {
-			errorLog.add(i);
-		}
+//		// adds all the missing indexes
+//		for(int i = comparisonText.length(); i < originalText.length(); i++) {
+//			errorLog.add(i);
+//		}
 		return errorLog;
 	}
 	
 	private ArrayList<Integer> sameSizeTexts(){
-		System.out.println("same");
 		for(int i = 0; i < originalText.length(); i++) {
 			// if two letters dont match on a certain index adds the index to a error log
 			if(originalText.charAt(i) != comparisonText.charAt(i)) {
